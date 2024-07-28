@@ -1,0 +1,56 @@
+.coffee-products-area {
+  position: relative;
+  height: 100vh;
+  .background-image-left {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 35%;
+    height: 100%;
+    background-image: url("../assets/coffee.png");
+    background-repeat: no-repeat;
+    background-position: 0% top;
+    background-size: 55%;
+    z-index: 9999;
+  }
+  .background-image-right {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 30%;
+    height: 100%;
+    background-image: url("../assets//coffee-house.png");
+    background-repeat: no-repeat;
+    background-size: 200px;
+    background-position: right top;
+    // z-index: 9999;
+  }
+  .coffee-products {
+    position: relative;
+    z-index: 2;
+    margin-top: 20px !important;
+    width: 65%;
+    margin: auto;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+}
+
+// Meadia Query
+@media only screen and (max-width: 1200px) {
+  .coffee-products-area {
+    .coffee-products {
+      width: 80% !important;
+      // grid-template-columns: repeat(1, 1fr);
+    }
+  }
+}
+@media only screen and (max-width: 992px) {
+  .coffee-products-area {
+    .coffee-products {
+      width: 80% !important;
+      grid-template-columns: repeat(1, 1fr);
+    }
+  }
+}

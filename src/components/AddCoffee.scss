@@ -1,0 +1,58 @@
+.add-coffee-area {
+  background-image: url("../assets//background.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+  height: 100vh;
+  padding: 40px;
+
+  .add-coffee-wrapper {
+    width: 65%;
+    margin: 0 auto;
+    .add-coffee-content {
+      background-color: #f4f3f0;
+      padding: 80px;
+      //text-align: center;
+    }
+  }
+}
+
+@media only screen and (max-width: 1200px) {
+  .add-coffee-area {
+    .add-coffee-wrapper {
+      width: 70% !important;
+    }
+  }
+}
+@media only screen and (max-width: 992px) {
+  .add-coffee-area {
+    .add-coffee-wrapper {
+      width: 80% !important;
+    }
+  }
+}
+@media only screen and (max-width: 768px) {
+  .add-coffee-area {
+    // padding: 10px !important;
+    .add-coffee-wrapper {
+      width: 100% !important;
+      .add-coffee-content {
+        padding: 35px;
+      }
+    }
+  }
+}
+@media only screen and (max-width: 576px) {
+  .add-coffee-area {
+    // padding: 10px !important;
+    .add-coffee-wrapper {
+      .add-coffee-content {
+        padding: 25px;
+      }
+    }
+  }
+}
+@media only screen and (max-width: 576px) {
+  .add-coffee-area {
+    padding: 10px !important;
+  }
+}

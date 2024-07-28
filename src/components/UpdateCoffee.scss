@@ -1,0 +1,14 @@
+.update-coffee-area {
+  background-image: url("../assets/background.png");
+  background-size: cover;
+  height: 100vh;
+  .update-coffee-content {
+    width: 60%;
+    margin: 0 auto;
+
+    .update-coffee-bottom {
+      background-color: #f4f3f0;
+      padding: 40px;
+    }
+  }
+}
