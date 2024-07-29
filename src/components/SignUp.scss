@@ -1,10 +1,11 @@
 @import url("https://fonts.googleapis.com/css2?family=Pacifico&display=swap");
 .sign-up-area {
   padding: 0 35px;
+  margin-top: 30px;
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   .sign-up-left {
     border-radius: 80px 0px 0px 80px;
-    height: 100vh;
+    height: 90vh;
     color: #fff;
     display: flex;
     align-items: end;
@@ -148,7 +149,7 @@
     border: 0.5px solid #4e2626;
 
     border-radius: 0px 80px 80px 0px;
-    height: 100vh;
+    height: 90vh;
     padding: 15px;
     display: flex;
     flex-direction: column;

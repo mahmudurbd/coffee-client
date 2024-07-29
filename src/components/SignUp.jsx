@@ -1,11 +1,52 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Button, Col, Form, Input, Row } from "antd";
 import "./SignUp.scss";
 import Cup from "../assets/coffee-cup.png";
 import Smoke from "../assets/smoke.png";
+import { AuthContext } from "../providers/AuthProvider";
+import sendNotification from "../common/sendNotification";
 
 const SignUp = () => {
   const [form] = Form.useForm();
+  const { createUser, loading, setLoading } = useContext(AuthContext);
+  console.log(loading);
+
+  // Signup Handler
+  const handleSignUp = (values) => {
+    const { email, password } = values;
+    console.log(email, password);
+    createUser(email, password)
+      .then((result) => {
+        const createdAt = result?.user?.metadata?.creationTime;
+        const user = { email, createdAt: createdAt };
+        fetch("http://localhost:5000/users", {
+          method: "POST",
+          headers: {
+            "content-type": "application/json",
+          },
+          body: JSON.stringify(user),
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            console.log(data);
+            if (data.insertedId) {
+              sendNotification(
+                "success",
+                "Success",
+                `Signup Successfully!`,
+                "topRight"
+              );
+              setLoading(false);
+            }
+          });
+        console.log(result.user);
+      })
+      .catch((err) => {
+        console.error(err.message);
+        sendNotification("error", "Error", `Email Already Exists!`, "topRight");
+        setLoading(false);
+      });
+  };
 
   return (
     <Row className="sign-up-area">
@@ -45,7 +86,7 @@ const SignUp = () => {
       >
         <h1>Sign Up</h1>
         <Form
-          //onFinish={handleAddCoffe}
+          onFinish={handleSignUp}
           layout="vertical"
           requiredMark="optional"
           form={form}
@@ -54,12 +95,17 @@ const SignUp = () => {
           <Row className="form-row">
             <Col span={24}>
               <Form.Item
-                label="Username"
-                name="username"
+                label="Email"
+                name="email"
                 rules={[
                   {
                     required: true,
-                    message: "Please input your username!",
+                    message: "Please input your email!",
+                  },
+                  {
+                    pattern:
+                      /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/,
+                    message: "Please enter a valid email address!",
                   },
                 ]}
               >
@@ -88,8 +134,9 @@ const SignUp = () => {
                   type="primary"
                   htmlType="submit"
                   size="large"
+                  loading={loading}
                 >
-                  Submit
+                  Sign Up
                 </Button>
               </Form.Item>
             </Col>
