@@ -67,6 +67,21 @@
   }
 }
 
+.ant-menu-overflow {
+  gap: 10px;
+}
+.ant-menu-item {
+  text-transform: uppercase;
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+}
+.ant-menu-light .ant-menu-item-selected {
+  background-color: #d2b48c31 !important;
+}
+/* mobile menu btn color */
+.ant-menu-dark.ant-menu-horizontal > .ant-menu-item-selected {
+  background-color: #d2b48c !important;
+}
+
 a {
   font-weight: 500;
   color: #646cff;
