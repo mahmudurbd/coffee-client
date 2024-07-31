@@ -1,59 +1,17 @@
-import React, { useContext } from "react";
+import React from "react";
+import "./Login.scss";
 import { Button, Col, Form, Input, Row } from "antd";
-import "./SignUp.scss";
 import Cup from "../assets/coffee-cup.png";
 import Smoke from "../assets/smoke.png";
-import { AuthContext } from "../providers/AuthProvider";
-import sendNotification from "../common/sendNotification";
-import { LockOutlined, MailOutlined, UserOutlined } from "@ant-design/icons";
+import { LockOutlined, MailOutlined } from "@ant-design/icons";
 import { Link } from "react-router-dom";
 
-const SignUp = () => {
+const Login = () => {
   const [form] = Form.useForm();
-  const { createUser, loading, setLoading } = useContext(AuthContext);
-  console.log(loading);
-
-  // Signup Handler
-  const handleSignUp = (values) => {
-    const { name, email, password } = values;
-    console.log(name, email, password);
-    createUser(email, password)
-      .then((result) => {
-        const createdAt = result?.user?.metadata?.creationTime;
-        const user = { name, email, createdAt: createdAt };
-        fetch("http://localhost:5000/users", {
-          method: "POST",
-          headers: {
-            "content-type": "application/json",
-          },
-          body: JSON.stringify(user),
-        })
-          .then((res) => res.json())
-          .then((data) => {
-            console.log(data);
-            if (data.insertedId) {
-              sendNotification(
-                "success",
-                "Success",
-                `Signup Successfully!`,
-                "topRight"
-              );
-              setLoading(false);
-            }
-          });
-        console.log(result.user);
-      })
-      .catch((err) => {
-        console.error(err.message);
-        sendNotification("error", "Error", `Email Already Exists!`, "topRight");
-        setLoading(false);
-      });
-  };
-
   return (
-    <Row className="sign-up-area">
+    <Row className="log-in-area">
       <Col
-        className="sign-up-left"
+        className="log-in-left"
         xs={24}
         sm={24}
         md={12}
@@ -78,7 +36,7 @@ const SignUp = () => {
         </div>
       </Col>
       <Col
-        className="sign-up-right"
+        className="log-in-right"
         xs={24}
         sm={24}
         md={12}
@@ -86,32 +44,15 @@ const SignUp = () => {
         xl={12}
         xxl={12}
       >
-        <h1>Sign Up</h1>
+        <h1>Please Login</h1>
         <Form
-          onFinish={handleSignUp}
+          // onFinish={handleLogin}
           layout="vertical"
           requiredMark="optional"
           form={form}
           className="form"
         >
           <Row className="form-row">
-            <Col span={24}>
-              <Form.Item
-                label="Name"
-                name="name"
-                rules={[
-                  {
-                    required: true,
-                    message: "Please input your name!",
-                  },
-                ]}
-              >
-                <Input
-                  size="large"
-                  prefix={<UserOutlined style={{ color: "#ccc" }} />}
-                />
-              </Form.Item>
-            </Col>
             <Col span={24}>
               <Form.Item
                 label="Email"
@@ -159,15 +100,15 @@ const SignUp = () => {
                   type="primary"
                   htmlType="submit"
                   size="large"
-                  loading={loading}
+                  // loading={loading}
                 >
-                  Sign Up
+                  Login
                 </Button>
               </Form.Item>
               <p>
-                Already Have an account?{" "}
-                <Link to="/login">
-                  <span>Login</span>
+                Don't Have an account?{" "}
+                <Link to="/signUp">
+                  <span>Sign Up</span>
                 </Link>
                 &nbsp;here
               </p>
@@ -179,4 +120,4 @@ const SignUp = () => {
   );
 };
 
-export default SignUp;
+export default Login;

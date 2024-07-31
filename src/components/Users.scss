@@ -1,0 +1,15 @@
+.users-area {
+  height: 100vh;
+  background: linear-gradient(
+      rgba(217, 207, 169, 0.37),
+      rgba(217, 207, 169, 0.347)
+    ),
+    url("../assets/background.png");
+  background-size: cover;
+  padding: 50px;
+  // background-color: #d9cfa969;
+  .users-table {
+    width: 50%;
+    margin: 0 auto;
+  }
+}

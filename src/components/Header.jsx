@@ -29,7 +29,11 @@ const Header = () => {
     },
     {
       key: "3",
-      label: <Link to="/signUp">Sign Up</Link>,
+      label: <Link to="/users">Users</Link>,
+    },
+    {
+      key: "4",
+      label: <Link to="/login">Login</Link>,
     },
   ];
 
