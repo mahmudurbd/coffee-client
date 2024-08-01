@@ -7,6 +7,7 @@ import { AuthContext } from "../providers/AuthProvider";
 import sendNotification from "../common/sendNotification";
 import { LockOutlined, MailOutlined, UserOutlined } from "@ant-design/icons";
 import { Link } from "react-router-dom";
+import axios from "axios";
 
 const SignUp = () => {
   const [form] = Form.useForm();
@@ -21,26 +22,26 @@ const SignUp = () => {
       .then((result) => {
         const createdAt = result?.user?.metadata?.creationTime;
         const user = { name, email, createdAt: createdAt };
-        fetch("http://localhost:5000/users", {
-          method: "POST",
-          headers: {
-            "content-type": "application/json",
-          },
-          body: JSON.stringify(user),
-        })
-          .then((res) => res.json())
-          .then((data) => {
-            console.log(data);
-            if (data.insertedId) {
-              sendNotification(
-                "success",
-                "Success",
-                `Signup Successfully!`,
-                "topRight"
-              );
-              setLoading(false);
-            }
-          });
+        // fetch("http://localhost:5000/users", {
+        //   method: "POST",
+        //   headers: {
+        //     "content-type": "application/json",
+        //   },
+        //   body: JSON.stringify(user),
+        // })
+        //   .then((res) => res.json())
+        axios.post("http://localhost:5000/users", user).then((data) => {
+          console.log(data);
+          if (data.data.insertedId) {
+            sendNotification(
+              "success",
+              "Success",
+              `Signup Successfully!`,
+              "topRight"
+            );
+            setLoading(false);
+          }
+        });
         console.log(result.user);
       })
       .catch((err) => {

@@ -1,13 +1,57 @@
-import React from "react";
+import React, { useContext } from "react";
 import "./Login.scss";
 import { Button, Col, Form, Input, Row } from "antd";
 import Cup from "../assets/coffee-cup.png";
 import Smoke from "../assets/smoke.png";
 import { LockOutlined, MailOutlined } from "@ant-design/icons";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../providers/AuthProvider";
+import sendNotification from "../common/sendNotification";
+import axios from "axios";
 
 const Login = () => {
   const [form] = Form.useForm();
+
+  const { signInUser, loading, setLoading } = useContext(AuthContext);
+
+  // Login Handler
+  const handleLogin = (values) => {
+    console.log(values);
+    const { email, password } = values;
+    signInUser(email, password)
+      .then((result) => {
+        console.log(result.user.metadata.lastSignInTime);
+        const user = {
+          email,
+          lastLoggedAt: result.user.metadata.lastSignInTime,
+        };
+        // fetch(`http://localhost:5000/users`, {
+        //   method: "PATCH",
+        //   headers: {
+        //     "content-type": "application/json",
+        //   },
+        //   body: JSON.stringify(user),
+        // })
+        //   .then((res) => res.json())
+        axios.patch("http://localhost:5000/users", user).then((data) => {
+          console.log(data);
+          if (data.data.modifiedCount > 0) {
+            sendNotification(
+              "success",
+              "Success",
+              `Login successfully!`,
+              "topRight",
+              true
+            );
+          }
+        });
+      })
+      .catch((err) => {
+        console.log(err.message);
+        sendNotification("error", "Error", `${err.message}`, "topRight", true);
+      });
+  };
+
   return (
     <Row className="log-in-area">
       <Col
@@ -46,7 +90,7 @@ const Login = () => {
       >
         <h1>Please Login</h1>
         <Form
-          // onFinish={handleLogin}
+          onFinish={handleLogin}
           layout="vertical"
           requiredMark="optional"
           form={form}

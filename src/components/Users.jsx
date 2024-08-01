@@ -3,6 +3,8 @@ import React, { useEffect, useMemo, useState } from "react";
 import "./Users.scss";
 import { DeleteOutlined } from "@ant-design/icons";
 import sendNotification from "../common/sendNotification";
+import moment from "moment";
+import axios from "axios";
 
 // const columns = [
 //   {
@@ -106,16 +108,18 @@ const Users = () => {
       })),
       onFilter: (value, record) => record?.email?.startsWith(value),
       filterSearch: true,
-      width: "40%",
+      width: "30%",
     },
     {
       title: "Last Login",
-      dataIndex: "lastLogin",
+      dataIndex: "lastLoggedAt",
+      width: "30%",
+      render: (text) => moment(text).format("MMMM D, YYYY h:mm A"),
     },
     {
       title: "Action",
       dataIndex: "action",
-      width: "10%",
+      width: "5%",
       render: (_, record) => (
         <Popconfirm
           title="Sure to Delete?"
@@ -134,16 +138,14 @@ const Users = () => {
   };
 
   useEffect(() => {
-    fetch("http://localhost:5000/users")
-      .then((res) => res.json())
-      .then((data) => {
-        //Unique key for table key
-        const usersWithKeys = data.map((user) => ({
-          ...user,
-          key: user._id,
-        }));
-        setUsers(usersWithKeys);
-      });
+    axios.get("http://localhost:5000/users").then((data) => {
+      //Unique key for table key
+      const usersWithKeys = data.data.map((user) => ({
+        ...user,
+        key: user._id,
+      }));
+      setUsers(usersWithKeys);
+    });
   }, []);
 
   return (
